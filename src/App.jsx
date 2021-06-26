@@ -1,43 +1,66 @@
 import React, { useEffect, useState } from "react";
-import logo from "./logo.svg";
 import "./App.css";
+import Heading from "./components/atoms/heading/index";
+import Text from "./components/atoms/text/index";
 
 function App() {
-  const [count, setCount] = useState(0);
+  const userPrefersTheme = (theme) =>
+    window.matchMedia &&
+    window.matchMedia(`(prefers-color-scheme: ${theme}`).matches;
 
+    const changeToTheme = (theme) => {
+      const htmlElement = document.querySelector("html");
+      const reverseTheme = theme === "dark" ? "light" : "dark";
+
+      htmlElement.classList.add(`${theme}-theme`);
+      htmlElement.classList.remove(`${reverseTheme}-theme`);
+
+    }
+    const verifyThemesClass = (theme) => {
+      const htmlElement = document.querySelector("html");
+      return htmlElement.classList.contains(`${theme}-theme`);
+    }
+
+  const toggleTheme = () => {
+    if (verifyThemesClass("dark")) return changeToTheme("light");
+    if (verifyThemesClass("light")) return changeToTheme("dark");
+    if (userPrefersTheme("dark")) return changeToTheme("light");
+    if (userPrefersTheme("light")) return changeToTheme("dark");
+  };
+
+  
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>Hello Vite + React!</p>
-        <p>
-          <button type="button" onClick={() => setCount((count) => count > 9 ? 0 : count + 1)}>
-            count is: {count}
-          </button>
-        </p>
-        <p>
-          Edit <code>App.jsx</code> and save to test HMR updates.
-        </p>
-        <p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-          {" | "}
-          <a
-            className="App-link"
-            href="https://vitejs.dev/guide/features.html"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Vite Docs
-          </a>
-        </p>
-      </header>
+      <Heading element="h1" weight="bold">
+        Heading H1
+      </Heading>
+      <Heading element="h2" weight="bold">
+        Heading H2
+      </Heading>
+      <Heading element="h3" weight="bold">
+        Heading H3
+      </Heading>
+      <Heading element="h4" weight="bold">
+        Heading H4
+      </Heading>
+      <Heading element="h5" weight="bold">
+        Heading H5
+      </Heading>
+      <Heading element="h6" weight="bold">
+        Heading H6
+      </Heading>
+      <Text weight="bold" size="xl">
+        Text XL
+      </Text>
+      <Text weight="bold" size="lg">
+        Text LG
+      </Text>
+      <Text weight="bold" size="base">
+        Text BASE
+      </Text>
+      <Text size="sm">Text SM</Text>
+      <Text size="xs">Text XS</Text>
+      <button onClick={toggleTheme}>Change themes</button>
     </div>
   );
 }
